@@ -46,3 +46,47 @@ exports.signUp = asyncHandler(async (req, res) => {   // we can remove asynch fr
     })
 
 })
+
+/***********************************************************************************
+ * @Login
+ * @routr :- http://localhost:4000/api/auth/login
+ * @description :- User login controller for login existing user
+ * @parameter :- email , password
+ * @returms User Object
+ ***********************************************************************************/
+
+exports.login = asyncHandler(async (req, res) => {
+
+    // collect all inforamtion from frontend
+    const { email, password } = req.body
+
+    // check all the field are fill or not
+    if (!email || !password) {
+        throw new CustomError("Please fill all the fields", 400)
+    }
+    // checkif user exist or not
+    const user = await User.findOne({ email }).select("+password")             // here we are using select becasue in userschem we set select: false in password so that password is not comes from databse..
+    // select("+password -name") it will select password and will not select name
+    if (!user) {
+        throw new CustomError("Invalid Crendential", 400)   // or we can say wrong email
+    }
+
+    // compare the password
+    const isPasswordCorrect = await user.comparePassword(password)
+    if (!isPasswordCorrect) {
+        throw new CustomError("Invalid Crendential-pp", 400)  // or we can say wrong password
+    }
+
+    // create a token
+    const token = user.getJwtToken()
+
+    user.password = undefined
+
+    res.cookie("token", token, cookieOption)
+    res.status(200).json({
+        success: true,
+        token,
+        user,
+    })
+
+})
