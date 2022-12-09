@@ -1,4 +1,7 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
+
+import orderStatus from "../utils/orderStatus";
+import paymentMode from "../utils/paymentMode";
 
 const orderSchema = new mongoose.Schema(
    {
@@ -35,8 +38,18 @@ const orderSchema = new mongoose.Schema(
       address: {
          type: String,
          required: true,
-      }
+      },
+      status: {
+         type: String,
+         enum: Object.values(orderStatus),
+         default: orderStatus.DELIVERED,
+      },
+      paymentMode: {
+         type: String,
+         enum: Object.values(paymentMode),
+         default: paymentMode.COD,
+      },
    } 
 )
 
-export default mongoose.model("Order" , orderSchema  )
+export default mongoose.model("Order" , orderSchema )

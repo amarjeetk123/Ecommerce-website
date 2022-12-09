@@ -1,12 +1,13 @@
-import mongoose from "mongoose";   // or   const mongoose = require("mongoose")
-import AuthRoles from "../utils/authRoles"
+const mongoose = require("mongoose")   
+const AuthRoles = require("../utils/authRoles")   
 
-import bcrypt from "bcryptjs"   // bcrypt is name or variable
-import JWT from "jsonwebtoken"  // JWT is name or variable
-import crypto from "crypto" // we don't need to install crypto because its a default nodejs package 
+
+const bcrypt = require("bcryptjs")   // bcrypt is name or variable
+const JWT = require("jsonwebtoken")   // JWT is name or variable
+const crypto = require("crypto")   // we don't need to install crypto because its a default nodejs package 
 // by using crypto we van generate a long string
 
-import config from "../config/index"
+const config  = require ("../config/index")
 
 const userSchema = mongoose.Schema(
 
@@ -49,8 +50,9 @@ const userSchema = mongoose.Schema(
 
 userSchema.pre("save", async function (next) {        // `pre` is a mongoose hokes , "save" is method that we used in userController for sacing the user insidedatabse and here we mostly used function instead of using arrow function and next is a middleware
 
-    if (!this.modified("password")) return next();
-
+    //if (!this.modified("password")) return next(); //done by hitesh sir-- actually this is prodcing a error:--  this.modified is not a function
+      if(!this.password) return next();
+      
     this.password = await bcrypt.hash(this.password, 10)
     next()
 
@@ -68,7 +70,7 @@ userSchema.methods = {
     },
 
     // create JWT token
-    getJetToken: function () {
+    getJwtToken: function () {
         return JWT.sign(
             {               // in this object write all the payload
                 _id: this._id,
@@ -95,4 +97,4 @@ userSchema.methods = {
     },
 }
 
-export default mongoose.model("User", userSchema)
+module.exports = mongoose.model("User", userSchema)

@@ -3,4 +3,6 @@ const AuthRoles = {
     MODERATOR: "MODERATOR",
     USER: "USER",
 };
-export default AuthRoles ;
+
+
+module.exports = AuthRoles
