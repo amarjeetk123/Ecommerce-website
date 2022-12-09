@@ -90,3 +90,24 @@ exports.login = asyncHandler(async (req, res) => {
     })
 
 })
+
+
+/***********************************************************************************
+ * @Logout
+ * @route :- http://localhost:4000/api/auth/logout
+ * @description :- User logout by clearing user cookies
+ * @parameter :- email , password
+ * @returms success message
+ ***********************************************************************************/
+
+exports.logout = asyncHandler(async (_req, res) => {    // instead of _req we can use req but it is good practice to use _req here...  _req here _ means it is not getting used
+
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    })                         // or we can use  // res.clearCookie()  this code will also clear user cookies
+    res.status(200).json({
+        success: true,
+        message: "user logout succesfully"
+    })
+})
