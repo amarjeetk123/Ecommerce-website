@@ -128,7 +128,7 @@ export const getAllCollection = asyncHandler(async (req,res) => {
     // send responce to front end
     res.status(200).json({
         success: true,
-        message: "Collection Deleted successfully",
+        message: "found all the xollection",
         collections,
     })
 })
