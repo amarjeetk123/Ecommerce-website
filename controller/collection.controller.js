@@ -105,3 +105,30 @@ export const deleteCollection = asyncHandler(async (req,res) => {
         
     })
 })
+
+
+
+/***********************************************************************************
+ * @Get_All_Collection
+ * @routr :- http://localhost:4000/api/getallcollections
+ * @description :- User will get all the available collection
+ * @parameter :- no parameter
+ * @returms :- collection object
+ ***********************************************************************************/
+
+export const getAllCollection = asyncHandler(async (req,res) => {
+
+    // get the list of all the availabe collection
+    let collections = await Collection.find()
+
+    if(!collections){
+        throw new CustomError( "No collection found!...."  , 400)
+    }
+
+    // send responce to front end
+    res.status(200).json({
+        success: true,
+        message: "Collection Deleted successfully",
+        collections,
+    })
+})
