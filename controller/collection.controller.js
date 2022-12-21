@@ -10,7 +10,7 @@ const CustomError = require("../utils/customError");
  * @returms Collection object
  ***********************************************************************************/
 
-export const createCoolection = asyncHandler(async (req,res) => {
+export const createCollection = asyncHandler(async (req,res) => {
 
     // collect the data
     const {name} = req.body
@@ -19,7 +19,7 @@ export const createCoolection = asyncHandler(async (req,res) => {
     }
 
     // add this name to databse
-    const collection = Collection.create({
+    const collection = await Collection.create({
         name
     })
 
@@ -29,4 +29,33 @@ export const createCoolection = asyncHandler(async (req,res) => {
         message: "Collection created successfully",
         collection,
     })
+})
+
+
+/***********************************************************************************
+ * @Update_Collection
+ * @routr :- http://localhost:4000/api/collection/update
+ * @description :- 
+ * @parameter :- 
+ * @returms :- 
+ ***********************************************************************************/
+export const updatecollection = asyncHandler(async (req,res) => {
+    // existing value to be updates
+    const {id: collectionId} = req.params
+    //new value to get updated
+    const {new_name}  = req.body
+
+    if(!new_name){
+        throw new CustomError( "new_name is required for updating the collection"  , 400)
+    }
+
+    let updatedCollection = await Collection.findByIdAndUpdate(    //findbyidandupdate is availabe in mongoose documentation
+        collectionId,
+        {
+            name:new_name,
+        },
+        {
+            new: true
+        }
+    )
 })
