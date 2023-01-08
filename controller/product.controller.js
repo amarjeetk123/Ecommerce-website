@@ -30,7 +30,7 @@ export const addProduct = asyncHandler( async (req,res) => {
             if (err) {
                 throw new CustomError(err.message || "Something went wrong", 500)
             }
-            let productId = new Mongoose.Types.ObjectId().toHexString();  // this is not necessary  // but because we want that every file name should be unique so that we are using this 
+            let productId = new Mongoose.Types.ObjectId().toHexString();  // this is not necessary  // but because we want that every file name should be unique so that we are using this  // from this we are generating a random id
             //console.log(fields, files)
 
             // check for fields
@@ -63,7 +63,6 @@ export const addProduct = asyncHandler( async (req,res) => {
             )
 
             let imgArray = await imgArrayResp;
-
             const product = await Product.create({
                 _id: productId,
                 photos: imgArray,
