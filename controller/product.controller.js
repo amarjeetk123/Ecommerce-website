@@ -108,3 +108,25 @@ export const getAllProducts = asyncHandler( async (req, res) => {
         products
     })
 })
+
+
+/**********************************************************
+ * @GET_PRODUCT_BY_ID
+ * @route https://localhost:5000/api/product
+ * @description Controller used for getting single product details
+ * @description User and admin can get single product details
+ * @returns Product Object
+ *********************************************************/
+export const getProductById = asyncHandler( async (req, res) => {
+
+    const {id: productId} = req.params
+    const product = await Product.findById(productId)
+
+    if (!product) {
+        throw new CustomError("No product was found", 404)
+    }
+    res.status(200).json({
+        success: true,
+        product
+    })
+})
