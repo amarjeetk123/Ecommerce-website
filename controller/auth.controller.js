@@ -241,7 +241,7 @@ exports.resetPassword = asyncHandler ( async (req,res) =>{
  * @parameters 
  * @returns User Object
  ******************************************************/
-export const getProfile = asyncHandler(async(req, res) => {
+exports.getProfile = asyncHandler(async(req, res) => {
     const {user} = req
     if (!user) {
         throw new CustomError('User not found', 404)
