@@ -1,4 +1,4 @@
-import  Collection  from "../models/collection.schema.js";
+const Collection  = require("../models/collection.schema.js");
 const asyncHandler = require("../services/asyncHandler");
 const CustomError = require("../utils/customError");
 
@@ -10,7 +10,7 @@ const CustomError = require("../utils/customError");
  * @returms Collection object
  ***********************************************************************************/
 
-export const createCollection = asyncHandler(async (req,res) => {
+exports.createCollection = asyncHandler(async (req,res) => {
 
     // collect the data
     const {name} = req.body
@@ -19,9 +19,7 @@ export const createCollection = asyncHandler(async (req,res) => {
     }
 
     // add this name to databse
-    const collection = await Collection.create({
-        name
-    })
+    const collection = await Collection.create({name})
 
     // send this respomnce value to frontend
     res.status(200).json({
@@ -39,7 +37,7 @@ export const createCollection = asyncHandler(async (req,res) => {
  * @parameter :- 
  * @returms :- 
  ***********************************************************************************/
-export const updatecollection = asyncHandler(async (req,res) => {
+exports.updatecollection = asyncHandler(async (req,res) => {
     // existing value to be updates
     const {id: collectionId} = req.params
     //new value to get updated
@@ -60,7 +58,7 @@ export const updatecollection = asyncHandler(async (req,res) => {
         }
     )
 
-    if(!updatecollection){
+    if(!updatedCollection){
         throw new CustomError( "Collection not found!...."  , 400)
     }
 
@@ -68,7 +66,7 @@ export const updatecollection = asyncHandler(async (req,res) => {
     res.status(200).json({
         success: true,
         message: "Collection updated successfully",
-        updatecollection,
+        updatedCollection,
     })
 })
 
@@ -81,14 +79,10 @@ export const updatecollection = asyncHandler(async (req,res) => {
  * @parameter :- 
  * @returms :- 
  ***********************************************************************************/
-export const deleteCollection = asyncHandler(async (req,res) => {
+exports.deleteCollection = asyncHandler(async (req,res) => {
     // existing value to be updates
     const {id: collectionId} = req.params
    
-
-    if(!new_name){
-        throw new CustomError( "new_name is required for updating the collection"  , 400)
-    }
 
     let deleteCollection = await Collection.findByIdAndDelete( collectionId )
 
@@ -116,7 +110,7 @@ export const deleteCollection = asyncHandler(async (req,res) => {
  * @returms :- collection object
  ***********************************************************************************/
 
-export const getAllCollection = asyncHandler(async (req,res) => {
+exports.getAllCollection = asyncHandler(async (req,res) => {
 
     // get the list of all the availabe collection
     let collections = await Collection.find()
