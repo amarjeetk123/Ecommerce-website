@@ -10,5 +10,11 @@ router.get("/login" , login );  // working
 router.post("/resetpassword/:resetToken" , resetPassword );  // not working
 router.get("/profile" , getProfile );    //not check
 
+const {createCollection, updatecollection, deleteCollection, getAllCollection} = require("../controller/collection.controller")
+router.post("/api/collection" , createCollection)
+router.put("/api/collection/update/:id" , updatecollection)
+router.delete("/api/collection/delete/:id" , deleteCollection)
+router.get("/api/getallcollections" , getAllCollection)
+
 
 module.exports = router;
