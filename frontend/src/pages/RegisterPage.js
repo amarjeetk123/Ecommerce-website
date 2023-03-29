@@ -1,17 +1,20 @@
-import React from 'react'
+import React from "react";
 
 const RegisterPage = () => {
     return (
-        <div className='w-75 bg-light-subtle'>
-            <label className='heading text-center'>Register</label>
-            <h1 className='email '>Full Name:</h1>
-            <input className='nameBox' />
-            <h1 className='email '>Email:</h1>
-            <input className='inputBox' />
-            <h1 className='password'>Password:</h1>
-            <input className='passwordBox' />
+        <div className="d-flex justify-content-center align-items-center" style={{height:"100vh"}}>
+            <div className="py-4 px-4 border border-primary">
+                <label className="heading text-center text-center w-100 fs-1 fw-bold">Register</label>
+                <h1 className="email fs-3 ">Full Name:</h1>
+                <input className="nameBox px-1" />
+                <h1 className="email fs-3 mt-2   ">Email:</h1>
+                <input className="inputBox px-1" />
+                <h1 className="password fs-3 mt-2">Password:</h1>
+                <input className="passwordBox px-1" />
+            </div>
         </div>
-    )
-}
 
-export default RegisterPage
+    );
+};
+
+export default RegisterPage;
