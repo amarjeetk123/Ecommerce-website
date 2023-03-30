@@ -1,0 +1,4 @@
+.main-register{
+    background:linear-gradient( rgba(255,255,255,0.4),rgba(255,255,255,0.4) ), url("./Images/background/OIP.jpg") ;
+    background-size: cover;
+}
